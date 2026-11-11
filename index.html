@@ -266,6 +266,13 @@ svg{display:block}
   max-width:80vw;
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* bare mode: launched via #url:… — show only the proxied page */
+body.bare #tabstrip,
+body.bare #toolbar,
+body.bare #bookmarks-bar{display:none!important}
+body.bare #pz-home{display:none!important}
+body.bare #pz-main{background:#202124}
 </style>
 </head>
 <body>
@@ -410,6 +417,16 @@ var starting = null;
 var pendingUrl = null;
 var currentW1sp = '';
 var w1spAttempts = [];
+
+var bareMode = false;
+
+function enterBareMode() {
+  if (bareMode) return;
+  bareMode = true;
+  document.body.classList.add('bare');
+  var home = $('pz-home');
+  if (home) home.classList.remove('active');
+}
 
 function toast(msg) {
   var t = $('toast');
@@ -793,6 +810,8 @@ function handleHashTarget() {
   var target = hashTarget(location.hash);
   if (!target) return false;
 
+  enterBareMode();
+
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
 
   if (controller) {
@@ -939,7 +958,7 @@ function renderView() {
   var home = !!(t && t.isHome);
 
   var homeEl = $('pz-home');
-  if (homeEl) homeEl.classList.toggle('active', home);
+  if (homeEl) homeEl.classList.toggle('active', home && !bareMode);
 
   tabs.forEach(function (x) {
     x.el.classList.toggle('active', x === t && !x.isHome);
@@ -1095,7 +1114,7 @@ function navigateTo(tab, value) {
     renderView();
     setTimeout(function () {
       var inp = $('pz-home-search-input');
-      if (inp && tab === activeTab) inp.focus();
+      if (inp && tab === activeTab && !bareMode) inp.focus();
     }, 0);
     return;
   }
@@ -1126,6 +1145,7 @@ function navigate(value) {
 }
 
 function newTab() {
+  if (bareMode) return;
   if (controller) createTab(PROXY_HOME);
   else initProxy();
 }
