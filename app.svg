@@ -268,8 +268,7 @@ body.bare #toolbar,
 body.bare #bookmarks-bar{display:none!important}
 body.bare #pz-home{display:none!important}
 body.bare #pz-main{background:#202124}
-  ]]>
-</style>
+]]></style>
 </head>
 <body>
 
