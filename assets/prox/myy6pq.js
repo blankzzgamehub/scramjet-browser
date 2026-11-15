@@ -719,7 +719,7 @@ var _pnclg8f;
         this.config = j(c, t3.config || {});
         this._uqtii5vConfig = j(l, i.sb);
         this._uqtii5vConfig = j(this._uqtii5vConfig, t3._uqtii5vConfig || {});
-        this.prefix = this.config.prefix + this.id + "/";
+        this.prefix = this.config.prefix; //+ this.id + "/";
         this.serviceWorkerController = t3.serviceworker;
         this.ready = Promise.all([new Promise(e3 => {
           this.readyResolve = e3;
@@ -920,7 +920,7 @@ var _pnclg8f;
         this.element = r2;
         this.options = o2;
         this.id = b();
-        this.prefix = this.controller.prefix + this.id + "/";
+        this.prefix = this.controller.prefix; //+ this.id + "/";
         this.fetchHandler = new i.mK({
           crossOriginIsolated: self.crossOriginIsolated,
           context: this.context,
