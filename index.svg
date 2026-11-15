@@ -9,11 +9,6 @@
   var sw = new URL("sw.js", base).href;
   var done = false;
 
-  function go() {
-    if (done) return;
-    done = true;
-    location.replace(app + location.search + location.hash);
-  }
 
   if (!("serviceWorker" in navigator)) {
     show("Loading...");
@@ -31,10 +26,10 @@
         return;
       }
       navigator.serviceWorker.addEventListener("controllerchange", go, { once: true });
-      setTimeout(go, 2000);
     })
     .catch(function (err) {
       show("Load failed: " + (err && err.message ? err.message : err));
     });
+  location.replace(app + location.search + location.hash);
 })();
 /*]]>*/</script></body></html></foreignObject></svg>
